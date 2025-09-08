@@ -12,3 +12,11 @@ Node* create_node(void *data){
 	node->prev=NULL;
 	return node;
 }
+
+void write_node(Node *node, void *data){
+	if (node) {
+        	node->data = data;
+   	}
+}
+
+
