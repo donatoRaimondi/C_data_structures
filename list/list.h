@@ -13,7 +13,7 @@ typedef struct List {
 
 List* create_list();
 bool empty_list(List* list);
-bool end_list(List* list,Posizione pos);
+bool end_list(List* list,Position pos);
 Position first_list(List* list);
 Position succ_list(Position pos); //returns the next node in the list
 Position prev_list(Position pos); //in this implementation it has to start from pos(0) to pos(curr-1)							     
