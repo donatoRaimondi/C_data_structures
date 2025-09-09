@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "list/list.h"
 
-// Funzione di stampa per debug
+// Funzione di stampa
 void print_list(List* list) {
     if (!list || empty_list(list)) {
         printf("Lista vuota\n");
@@ -10,10 +10,21 @@ void print_list(List* list) {
     }
     Position curr = list->head;
     while (curr) {
-        printf("%d <-> ", (int)(intptr_t)curr->data); // cast a int per test
+        printf("%d <-> ", *(int*)curr->data);
         curr = curr->next;
     }
     printf("NULL\n");
+}
+
+// Funzione helper per creare interi dinamici
+int* create_int(int value) {
+    int* ptr = malloc(sizeof(int));
+    if (!ptr) {
+        perror("malloc failed");
+        exit(EXIT_FAILURE);
+    }
+    *ptr = value;
+    return ptr;
 }
 
 int main() {
@@ -21,43 +32,53 @@ int main() {
 
     List* list = create_list();
 
-    printf("\n1. Inserimento in lista vuota (10 in testa)\n");
-    ins_list(list, 10, 0);
+    // 1. Inserimento in lista vuota
+    ins_list(list, create_int(10), 0);
     print_list(list);
 
-    printf("\n2. Inserimento in testa (20 in posizione 0)\n");
-    ins_list(list, 20, 0);
+    // 2. Inserimento in testa
+    ins_list(list, create_int(20), 0);
     print_list(list);
 
-    printf("\n3. Inserimento in coda (30 in posizione list_size)\n");
-    ins_list(list, 30, list->list_size);
+    // 3. Inserimento in coda
+    ins_list(list, create_int(30), list->list_size);
     print_list(list);
 
-    printf("\n4. Inserimento in posizione intermedia (25 in posizione 2)\n");
-    ins_list(list, 25, 2);
+    // 4. Inserimento in posizione intermedia
+    ins_list(list, create_int(25), 2);
     print_list(list);
 
-    printf("\n5. Rimozione dalla testa\n");
+    // 5. Rimozione dalla testa
+    free(list->head->data); // libero il dato prima di rimuovere
     remove_list(list, 0);
     print_list(list);
 
-    printf("\n6. Rimozione dalla coda\n");
+    // 6. Rimozione dalla coda
+    free(list->head->next->data); // libero dato coda
     remove_list(list, list->list_size - 1);
     print_list(list);
 
-    printf("\n7. Rimozione da posizione intermedia\n");
+    // 7. Rimozione da posizione intermedia
+    free(list->head->next->data); // libero dato
     remove_list(list, 1);
     print_list(list);
 
-    printf("\n8. Rimozione da lista vuota (dopo svuotamento completo)\n");
-    remove_list(list, 0);
+    // 8. Rimozione dalla lista fino a vuota
+    free(list->head->data);
     remove_list(list, 0);
     print_list(list);
 
-    printf("\n9. Inserimento in lista vuota (40 in testa)\n");
-    ins_list(list, 40, 0);
+    // 9. Inserimento in lista vuota
+    ins_list(list, create_int(40), 0);
     print_list(list);
 
+    // Pulizia finale
+    while (!empty_list(list)) {
+        free(list->head->data); // libero il dato
+        remove_list(list, 0);
+    }
+    free_list(list);
+
+    printf("=== Fine Test ===\n");
     return 0;
-}
-
+}   

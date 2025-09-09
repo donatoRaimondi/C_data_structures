@@ -118,8 +118,11 @@ void* read_list(List *list, int pos){
     return curr->data;
 }
 
-void write_list(List *list, Position pos, void* data){ //write inside the node, in the position written
+void write_list(List *list, int pos, void* data){ //write inside the node, in the position written
     if (!list || pos < 0 || pos >= list->list_size) return;
-
-    write_node(pos, data);
+    Position curr = first_list(list);
+    for(int i = 0; i < pos; i++){
+        curr = succ_list(curr);
+    }
+    write_node(curr, data);
 }
