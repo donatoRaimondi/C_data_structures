@@ -109,7 +109,7 @@ void remove_list(List* list, int pos){
 }
 
 void* read_list(List *list, int pos){
-    if (!list || pos < 0 || pos >= list->list_size) return;
+    if (!list || pos < 0 || pos >= list->list_size) return NULL;
     Position curr = first_list(list);
     for(int i = 0; i < pos; i++){
         curr = succ_list(curr);
@@ -119,7 +119,7 @@ void* read_list(List *list, int pos){
 }
 
 void write_list(List *list, int pos, void* data){ //write inside the node, in the position written
-    if (!list || pos < 0 || pos >= list->list_size) return;
+    if (!list || pos < 0 || pos >= list->list_size) return ;
     Position curr = first_list(list);
     for(int i = 0; i < pos; i++){
         curr = succ_list(curr);
