@@ -11,11 +11,115 @@ List* create_list() {
     return list;
 }
 
-bool empty_list(List* list);
-Position first_list(List* list);
-Position succ_list(Position pos); //returns the next node in the list
-Position prev_list(Position pos); //in this implementation it has to start from pos(0) to pos(curr-1)                                                                                     
-void ins_list(List* list, void* node, Position pos); //add a node to the list, in the logical position passed (0 is the head)
-void remove_list(List* list, Position pos);
-void* read_list(Position pos);
-void write_list(Position pos, void* data); //write inside the node, in the position written
+bool empty_list(List* list) {
+    return (list == NULL) || (list->head == NULL);
+}
+
+bool end_list(Position pos){
+    return (succ_list(pos) == NULL);
+}
+
+Position first_list(List* list){
+    return list->head;		
+}
+
+Position succ_list(Position pos){
+    return next_node(pos);
+}
+
+Position prev_list(Position pos){
+    return prev_node(pos);
+}
+
+void ins_list(List* list, void* data, int pos){
+    if (!list || pos < 0 || pos > list->list_size) return;
+
+    Position node = create_node(data);
+
+    // insert in first position, but with empty list
+    if(empty_list(list)){
+	    list->head = node;
+	    list->list_size++;
+	    return;
+    }
+
+    // insert in first position
+    if(pos == 0){
+	set_next_node(node,list->head);
+	if(list->head){
+		set_prev_node(list->head, node);
+	}
+	list->head = node;
+        list->list_size++;
+	return;
+    }
+
+    // appending (tail insert)
+    if(pos == list->list_size){
+        Position curr = first_list(list);
+	while(end_list(list,curr)){
+     		curr = succ_list(curr);
+	}
+	set_next_node(curr, node);
+	set_prev_node(node, curr);
+	list_size++	
+	return;
+    }
+    
+    // insert in middle pos(i)
+    Position curr = first_list(list);
+    for(int i = 0; i < pos - 1; i++){
+	    curr = succ_list(curr);
+    }
+    node->next = curr->next;
+    node->prev = curr;
+    curr->next->prev = node;
+    curr->next = node;
+
+    list->list_size++;
+}
+
+void remove_list(List* list, int pos){
+    if (!list || pos < 0 || pos >= list->list_size) return;
+    // delete the head - set the new head to head->next	
+    if(pos == 0){
+	Position node = list->head;    
+	list->head = next_node(list->head);
+	if(list->head) list->head->prev = NULL;
+	free_node(node);
+	list->list_size--;
+	return;
+    }	    
+
+    // remove in the middle
+    Position curr = first_list(list);
+    for(int i = 0; i < pos; i++){
+        curr = succ_list(curr);
+    }
+    
+    if(curr->prev){
+	curr->next->prev = curr->next;
+    } 
+    if(curr->next){
+	curr->next->prev = curr->prev;
+    }
+
+    free_node(curr);
+    list->list_size--;
+}
+
+void* read_list(int pos){
+    if (!list || pos < 0 || pos >= list->list_size) return;
+    Position curr = first_list(list);
+    for(int i = 0; i < pos; i++){
+        curr = succ_list(curr);
+    }
+	
+    return node->data;	     	    
+}
+
+void write_list(Position pos, void* data){ //write inside the node, in the position written
+    if (!list || pos < 0 || pos >= list->list_size) return;
+
+    write_node(pos, data);
+} 
