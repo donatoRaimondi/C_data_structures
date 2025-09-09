@@ -108,7 +108,7 @@ void remove_list(List* list, int pos){
     list->list_size--;
 }
 
-void* read_list(int pos){
+void* read_list(List *list, int pos){
     if (!list || pos < 0 || pos >= list->list_size) return;
     Position curr = first_list(list);
     for(int i = 0; i < pos; i++){
@@ -122,4 +122,4 @@ void write_list(Position pos, void* data){ //write inside the node, in the posit
     if (!list || pos < 0 || pos >= list->list_size) return;
 
     write_node(pos, data);
-} 
+}
