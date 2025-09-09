@@ -22,19 +22,19 @@ int main() {
     List* list = create_list();
 
     printf("\n1. Inserimento in lista vuota (10 in testa)\n");
-    ins_list(list, (void*)(intptr_t)10, 0);
+    ins_list(list, 10, 0);
     print_list(list);
 
     printf("\n2. Inserimento in testa (20 in posizione 0)\n");
-    ins_list(list, (void*)(intptr_t)20, 0);
+    ins_list(list, 20, 0);
     print_list(list);
 
     printf("\n3. Inserimento in coda (30 in posizione list_size)\n");
-    ins_list(list, (void*)(intptr_t)30, list->list_size);
+    ins_list(list, 30, list->list_size);
     print_list(list);
 
     printf("\n4. Inserimento in posizione intermedia (25 in posizione 2)\n");
-    ins_list(list, (void*)(intptr_t)25, 2);
+    ins_list(list, 25, 2);
     print_list(list);
 
     printf("\n5. Rimozione dalla testa\n");
@@ -55,7 +55,7 @@ int main() {
     print_list(list);
 
     printf("\n9. Inserimento in lista vuota (40 in testa)\n");
-    ins_list(list, (void*)(intptr_t)40, 0);
+    ins_list(list, 40, 0);
     print_list(list);
 
     return 0;

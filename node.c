@@ -31,7 +31,7 @@ Node* next_node(Node *node){
 }
 
 Node* prev_node(Node *node){
-    return node ? node->prev : null;
+    return node ? node->prev : NULL;
 }
 
 void set_next_node(Node *node, Node *next) {
@@ -40,7 +40,7 @@ void set_next_node(Node *node, Node *next) {
     }
 }
 
-void set_prev_node(Node *node, Node *prev) {i
+void set_prev_node(Node *node, Node *prev) {
     if (node) {
         node->prev = prev;
     }

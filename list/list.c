@@ -57,12 +57,12 @@ void ins_list(List* list, void* data, int pos){
     // appending (tail insert)
     if(pos == list->list_size){
         Position curr = first_list(list);
-	while(end_list(list,curr)){
+	while(end_list(curr)){
      		curr = succ_list(curr);
 	}
 	set_next_node(curr, node);
 	set_prev_node(node, curr);
-	list_size++	
+	list->list_size++;
 	return;
     }
     
@@ -114,11 +114,11 @@ void* read_list(List *list, int pos){
     for(int i = 0; i < pos; i++){
         curr = succ_list(curr);
     }
-	
-    return node->data;	     	    
+
+    return curr->data;
 }
 
-void write_list(Position pos, void* data){ //write inside the node, in the position written
+void write_list(List *list, Position pos, void* data){ //write inside the node, in the position written
     if (!list || pos < 0 || pos >= list->list_size) return;
 
     write_node(pos, data);
