@@ -75,9 +75,9 @@ int main() {
     // Pulizia finale
     while (!empty_list(list)) {
         free(list->head->data); // libero il dato
-        remove_list(list, 0);
+        remove_list(list, 0);   // rimuovo il nodo dalla lista
     }
-    free_list(list);
+    free(list); // libero la struttura della lista
 
     printf("=== Fine Test ===\n");
     return 0;
