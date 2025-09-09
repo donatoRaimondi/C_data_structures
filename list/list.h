@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include <stdbool.h>
-#include "node.h"
+#include "../node.h"
 
 typedef Node* Position;
 
